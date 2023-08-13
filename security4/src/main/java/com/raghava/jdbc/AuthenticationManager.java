@@ -18,30 +18,11 @@ public class AuthenticationManager extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource dataSource;
 
-	/*
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception { // TODO Auto-generated method stub
-	 * 
-	 * auth.inMemoryAuthentication().withUser("kvr").password("kvr123").roles(
-	 * "USER") .and().withUser("raghava").password("kvraghava").roles("ADMIN");
-	 * 
-	 * auth.jdbcAuthentication().dataSource(dataSource).withDefaultSchema()
-	 * .withUser(User.withUsername("kvr").password("kvr123").roles("USER"))
-	 * .withUser(User.withUsername("raghava").password("kvraghava").roles("ADMIN"));
-	 * }
-	 */
-	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
-		/*
-		 * auth.inMemoryAuthentication().withUser("kvr").password("kvr123").roles(
-		 * "USER") .and().withUser("raghava").password("kvraghava").roles("ADMIN");
-		 */
-		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select username,password,enabled "+
-					" from my_user "+" where username = ?")
-				.authoritiesByUsernameQuery("select username,authority "+
-						 " from my_auth "+" where username = ?");
+		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getPasswordEncoder())
+				.usersByUsernameQuery("select username,password,enabled from my_user where username = ?")
+				.authoritiesByUsernameQuery("select username,authority from my_auth where username = ?");
 
 	}
 

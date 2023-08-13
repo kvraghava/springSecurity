@@ -10,7 +10,7 @@ public class HelloResource {
 	
 	@GetMapping
 	public String getGretting() {
-		return "welcome to Spring security3";
+		return "welcome to Spring security4";
 	}
 	
 	@GetMapping("/user")
